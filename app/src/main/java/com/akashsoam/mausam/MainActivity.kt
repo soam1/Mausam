@@ -164,9 +164,9 @@ class MainActivity : AppCompatActivity() {
                         val weather: WeatherResponse? = response.body()
                         for (i in weather!!.weather.indices) {
                             findViewById<TextView>(R.id.text_view_sunset).text =
-                                weather.sys.sunset.toLong().toString()
+                                convertTime(weather.sys.sunset.toLong())
                             findViewById<TextView>(R.id.text_view_sunrise).text =
-                                weather.sys.sunrise.toLong().toString()
+                                convertTime(weather.sys.sunrise.toLong() )
                             findViewById<TextView>(R.id.text_view_status).text =
                                 weather.weather[i].description
                             findViewById<TextView>(R.id.text_view_address).text = weather.name
@@ -227,5 +227,12 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this@MainActivity, "NOT connected to the internet", Toast.LENGTH_SHORT)
                 .show()
         }
+    }
+
+    private fun convertTime(time: Long): String {
+        val date = java.util.Date(time * 1000L)
+        val sdf = java.text.SimpleDateFormat("HH:mm:ss z", java.util.Locale.getDefault())
+        sdf.timeZone = java.util.TimeZone.getDefault()
+        return sdf.format(date)
     }
 }
