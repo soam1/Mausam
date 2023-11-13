@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.akashsoam.mausam.utils.Constants
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
@@ -76,6 +77,7 @@ class MainActivity : AppCompatActivity() {
                     "latitude: ${locationResult.lastLocation?.latitude} \n longitude: ${locationResult.lastLocation?.longitude}",
                     Toast.LENGTH_SHORT
                 ).show()
+                getLocationWeatherDetails()
             }
         }, Looper.myLooper())
     }
@@ -127,5 +129,15 @@ class MainActivity : AppCompatActivity() {
             .setMessage("go to settings to turn on the device location?").setCancelable(false)
             .show()
 
+    }
+
+    private fun getLocationWeatherDetails() {
+        if (Constants.isNetworkAvailable(this@MainActivity)) {
+            Toast.makeText(this@MainActivity, "connected to the internet", Toast.LENGTH_SHORT)
+                .show()
+        } else {
+            Toast.makeText(this@MainActivity, "NOT connected to the internet", Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 }
